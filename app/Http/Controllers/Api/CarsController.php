@@ -16,7 +16,8 @@ class CarsController extends Controller
      */
     public function index()
     {
-        return response()->json(Car::all());
+        $cars = Car::with('category', 'images')->get();
+        return response()->json($cars);
     }
 
     /**
@@ -40,7 +41,8 @@ class CarsController extends Controller
      */
     public function show(Car $car)  
     {
-        return response()->json($car);
+        $data = Car::with('category', 'images')->find($car->id);
+        return response()->json($data);
     }
 
     /**
