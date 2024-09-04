@@ -1,11 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.myapp')
 
 @section('title', 'Listado de Categorías')
 
 @section('content')
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Listado de Categorías</h1>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">Nueva Categoría</a>
+        @if(auth()->user()->isEditor())
+            <a href="{{ route('categories.create') }}" class="btn btn-primary">Nueva Categoría</a>
+        @endif
     </div>
 
     @if(session('success'))
@@ -17,23 +19,27 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Acciones</th>
-            </tr>
+                @if(auth()->user()->isEditor())
+                    <th>Acciones</th>
+                @endif
+                </tr>
         </thead>
         <tbody>
             @foreach($categories as $category)
                 <tr>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->description }}</td>
-                    <td>
-                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
+                    @if(auth()->user()->isEditor())
+                        <td>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+                    @endif
+                    </tr>
             @endforeach
         </tbody>
     </table>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.myapp')
 
 @section('title', 'Listado de Categorías')
 
@@ -6,13 +6,13 @@
     <div class="d-flex align-items-center justify-content-around mb-3">
         <h1>Coches</h1>
         <div class="text-center">
-            <a href="{{ route('cars.create') }}" class="btn btn-primary mb-2">Nuevo Coche</a>
+            @if(auth()->user()->isEditor()) <a href="{{ route('cars.create') }}" class="btn btn-primary mb-2">Nuevo Coche</a> @endif
             <a href="/api/cars" class="btn btn-secondary mb-2">Mostrar JSON</a>
             <a href="{{ route('cars.exportCsv') }}" class="btn btn-success mb-2">Exportar CSV</a>
         </div>
     </div>
     <form method="GET" action="{{ route('cars.index') }}">
-        <div class="mb-3 d-flex justify-content-center" style="width: 80%; margin: auto;">
+        <div class="mb-4 d-flex justify-content-center" style="width: 80%; margin: auto;">
             
                 <input type="text" name="search" class="form-control" placeholder="Buscar..." value="{{ request('search') }}" style="margin-right: 5px;">
                 <button type="submit" class="btn btn-primary">Buscar</button>
@@ -54,12 +54,14 @@
                 @endif</td>
                 <td>
                     <a href="{{ route('cars.show', $car) }}" class="btn btn-sm btn-info mb-1">Ver</a>
-                    <a href="{{ route('cars.edit', $car) }}" class="btn btn-sm btn-warning mb-1">Editar</a>
-                    <form action="{{ route('cars.destroy', $car) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger mb-1">Eliminar</button>
-                    </form>
+                    @if(auth()->user()->isEditor())
+                        <a href="{{ route('cars.edit', $car) }}" class="btn btn-sm btn-warning mb-1">Editar</a>
+                        <form action="{{ route('cars.destroy', $car) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger mb-1">Eliminar</button>
+                        </form>
+                    @endif
                     <a href="/api/cars/{{ $car->id }}" class="btn btn-sm btn-secondary mb-1">JSON</a>
                 </td>
             </tr>

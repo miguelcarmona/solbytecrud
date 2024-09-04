@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.myapp')
 
 @section('content')
 <div class="container">
@@ -51,7 +51,7 @@
         </div>
         <div class="card-footer">
             <a href="{{ route('cars.index') }}" class="btn btn-secondary">Volver a la lista</a>
-            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary">Editar</a>
+            @if(auth()->user()->isEditor()) <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary">Editar</a> @endif
         </div>
     </div>
 </div>

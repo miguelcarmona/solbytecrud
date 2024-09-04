@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.myapp')
 
 @section('title', 'Editar Coche')
 
@@ -17,7 +17,7 @@
 
     <form action="{{ route('cars.store') }}/{{$car->id}}" method="POST" enctype="multipart/form-data">
         @csrf
-            @method('PUT')
+        @method('PUT')
         <div class="form-group">
             <label for="category_id">Categoría</label>
             <select name="category_id" id="category_id" class="form-control" required>

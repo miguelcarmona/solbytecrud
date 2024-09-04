@@ -15,6 +15,7 @@ class CarController extends Controller
      */
     public function index(Request $request)
     {
+
         // Orden
         $sortColumn = $request->input('sort', 'id'); // Columna por defecto es 'id'
         $sortDirection = $request->input('direction', 'asc'); // Dirección por defecto es 'asc'
