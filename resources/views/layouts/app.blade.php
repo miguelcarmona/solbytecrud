@@ -5,49 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Aplicación CRUD')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    /* Galería de imágenes */
-    .gallery {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-end;
-        flex-wrap: wrap;
-        gap: 10px
-    }
-
-    .main_image figure, .gallery figure {
-        padding: 5px;
-        margin: 0px;
-        text-align: center;
-    }
-
-    .main_image img, .gallery img {
-        max-width: 100%;
-        height: auto;
-        vertical-align: bottom;
-    }
-
-    .main_image figcaption, .gallery figcaption {
-        margin-top: 8px;
-        font-size: 14px;
-        color: #666;
-    }
-
-    .images img {
-        border: 1px solid #dee2e6;
-        padding: 5px;
-        max-width: 100%;
-    }
-
-    nav>div:first-child {
-        display: none;
-    }
-
-    nav svg{
-        width: 20px;
-    }
-    </style>
-</head>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-nombre" href="#">CRUD App</a>
