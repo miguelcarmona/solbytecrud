@@ -31,9 +31,7 @@
             @if($car->main_image)
                 <div class="mb-4 images">
                     <h5>Imagen Principal</h5>
-                    <!-- <a href="{{ asset('storage/' . $car->main_image) }}"> -->
                         <img src="{{ asset('storage/' . $car->main_image) }}" aria-img-modal alt="Imagen Principal" class="img-fluid" style="max-width: 100%;">
-                    <!-- </a> -->
                 </div>
             @endif
 

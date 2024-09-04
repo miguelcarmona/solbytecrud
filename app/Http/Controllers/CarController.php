@@ -13,10 +13,57 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::with('category', 'images')->paginate(10);
-        return view('cars.index', compact('cars'));
+        // Orden
+        $sortColumn = $request->input('sort', 'id'); // Columna por defecto es 'id'
+        $sortDirection = $request->input('direction', 'asc'); // Dirección por defecto es 'asc'
+
+        // Validar que la columna de ordenación es válida
+        $validColumns = ['id', 'category_id', 'nombre', 'model', 'matricula', 'color'];
+        if (!in_array($sortColumn, $validColumns)) {
+            $sortColumn = 'id'; // Valor por defecto si la columna no es válida
+        }
+
+        // Validar la dirección de ordenación
+        $sortDirection = $sortDirection === 'desc' ? 'desc' : 'asc';
+
+
+
+        // Obtener el término de búsqueda y dividirlo en palabras
+        $searchTerm = $request->input('search', '');
+        $searchTerms = array_filter(explode(' ', $searchTerm)); // Eliminar términos vacíos
+        
+        // Obtener las categorías para el filtro de búsqueda
+        $categories = Category::all();
+
+        // Consultar los coches aplicando los filtros
+        $cars = Car::with('category')
+            ->when($searchTerms, function ($query, $searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $query->where(function ($query) use ($term) {
+                        $query->where('nombre', 'like', "%{$term}%")
+                            ->orWhere('model', 'like', "%{$term}%")
+                            ->orWhere('matricula', 'like', "%{$term}%")
+                            ->orWhere('color', 'like', "%{$term}%")
+                            ->orWhereHas('category', function ($query) use ($term) {
+                                $query->where('name', 'like', "%{$term}%");
+                            });
+                    });
+                }
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->paginate(10);
+            
+        // Agregar los parámetros de búsqueda y ordenación a los enlaces de paginación
+        $cars->appends([
+            'search' => $searchTerm,
+            'sort' => $sortColumn,
+            'direction' => $sortDirection
+        ]);
+
+        return view('cars.index', compact('cars', 'sortColumn', 'sortDirection', 'searchTerm', 'categories'));
+
     }
 
     /**
