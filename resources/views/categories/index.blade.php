@@ -3,7 +3,7 @@
 @section('title', 'Listado de Categorías')
 
 @section('content')
-    <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h1>Listado de Categorías</h1>
         <a href="{{ route('categories.create') }}" class="btn btn-primary">Nueva Categoría</a>
     </div>
@@ -12,7 +12,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Nombre</th>

@@ -36,7 +36,7 @@
                 <td>{{ $car->matricula }}</td>
                 <td>{{ $car->color }}</td>
                 <td>@if($car->main_image)
-                    <img src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen Principal" class="img-fluid" style="max-width: 300px;">
+                    <img src="{{ asset('storage/' . $car->main_image) }}" aria-img-modal alt="Imagen Principal" class="img-fluid" style="max-width: 300px;">
                 @endif</td>
                 <td>
                     <a href="{{ route('cars.show', $car) }}" class="btn btn-sm btn-info">Ver</a>

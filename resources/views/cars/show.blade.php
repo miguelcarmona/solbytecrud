@@ -31,7 +31,9 @@
             @if($car->main_image)
                 <div class="mb-4 images">
                     <h5>Imagen Principal</h5>
-                    <a href="{{ asset('storage/' . $car->main_image) }}"><img src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen Principal" class="img-fluid" style="max-width: 600px;"></a>
+                    <!-- <a href="{{ asset('storage/' . $car->main_image) }}"> -->
+                        <img src="{{ asset('storage/' . $car->main_image) }}" aria-img-modal alt="Imagen Principal" class="img-fluid" style="max-width: 100%;">
+                    <!-- </a> -->
                 </div>
             @endif
 
@@ -42,7 +44,7 @@
                     <div class="row">
                         @foreach($car->images as $image)
                             <div class="col-md-3 mb-2">
-                            <a href="{{ asset('storage/' . $image->image_path) }}"><img src="{{ asset('storage/' . $image->image_path) }}" alt="Imagen de Galería" class="img-fluid" style="max-width: 100%;"></a>
+                                <img src="{{ asset('storage/' . $image->image_path) }}" aria-img-modal alt="Imagen de Galería" class="img-fluid" style="max-width: 100%;">
                             </div>
                         @endforeach
                     </div>
