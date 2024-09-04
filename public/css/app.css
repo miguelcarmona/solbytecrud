@@ -33,10 +33,10 @@
 
 
 /* Paginación */
-nav>div:first-child {
+nav[role="navigation"][aria-label="Pagination Navigation"]>div:first-child {
     display: none;
 }
 
-nav svg{
+nav[role="navigation"][aria-label="Pagination Navigation"] svg{
     width: 20px;
 }
