@@ -19,15 +19,28 @@ $(document).ready(function() {
 
 
     /**
+     * Modal para eliminar una categoría
+     */
+    $('#modalDeleteCategory').on('show.bs.modal', function (event) {
+        
+        var modal = $(this);
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        $('#form-destroy').attr('action', button.data('form_action'));
+        modal.find('.modal-body p').html(button.data('car_name'));
+        modal.find('[aria-borrar]').attr('onclick','$(\'#form-destroy\').submit();');
+    });
+
+
+    /**
      * Modal para eliminar un coche
      */
     $('#modalDeleteCar').on('show.bs.modal', function (event) {
         
         var modal = $(this);
         var button = $(event.relatedTarget); // Button that triggered the modal
-        $('#form-car-destroy').attr('action', button.data('form_action'));
+        $('#form-destroy').attr('action', button.data('form_action'));
         modal.find('.modal-body p').html(button.data('car_name'));
-        modal.find('[aria-borrar]').attr('onclick','$(\'#form-car-destroy\').submit();');
+        modal.find('[aria-borrar]').attr('onclick','$(\'#form-destroy\').submit();');
     });
 
 
@@ -81,3 +94,10 @@ function carDeleteImage(carId, imageId, csrf_token) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+/** Limpiar el input search con el botón X */
+$('#carSearch div.input-group   .btn-secondary').on('click', function() {
+    $('#search_input_id').val(''); // Vacía el input
+    $('#carSearch').submit(); // Envía el formulario para vaciar
+    $(this).blur(); // Quita el foco del botón
+});

@@ -24,6 +24,7 @@ Route::get('/', function () {
 */
 
 Route::get('/', [CarController::class, 'index'])->middleware(['auth', 'verified']);
+Route::get('/dashboard', [CarController::class, 'index'])->middleware(['auth', 'verified']);
 Route::get('/categories', [CategoryController::class, 'index'])->middleware(['auth', 'verified']);
 
 
@@ -42,8 +43,9 @@ Route::middleware(['auth', 'role:ver,editar'])->group(function () {
 Route::middleware(['auth', 'role:editar'])->group(function () {
 
     //Route::resource('categories', CategoryController::class)->only(['show','create','store','update','edit','destroy']);
-    Route::get('categories/show ', [CategoryController::class, 'show'])-> name('categories.show');
-    Route::get('categories/create ', [CategoryController::class, 'create'])-> name('categories.create');
+    Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
+    Route::get('categories/show', [CategoryController::class, 'show'])-> name('categories.show');
+    Route::get('categories/create', [CategoryController::class, 'create'])-> name('categories.create');
     Route::post('categories', [CategoryController::class, 'store'])-> name('categories.store');
     Route::get('categories/{categories}/edit', [CategoryController::class, 'edit'])-> name('categories.edit');
     Route::put('categories/{categories}', [CategoryController::class, 'update'])-> name('categories.update');
@@ -59,10 +61,11 @@ Route::middleware(['auth', 'role:editar'])->group(function () {
     Route::delete('cars/{car}/images/{image}', [CarController::class, 'destroyGalleryImage'])-> name('cars.images.destroy');
 });
 
-
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

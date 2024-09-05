@@ -1,3 +1,12 @@
+/* Barra de búsqueda en cars */
+#carSearch div.input-group {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+
+
 /* Galería de imágenes */
 .gallery {
     display: flex;

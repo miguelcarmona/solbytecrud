@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('categories.update', $category->id) }}" method="POST">
+    <form action="{{ route('categories.store') }}/{{$category->id}}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
