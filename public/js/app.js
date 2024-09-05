@@ -17,4 +17,13 @@ $(document).ready(function() {
         $(this).removeClass('visible');
     });
 
+
+    /**
+     * Eliminar imágenes de los coches al editar la ficha
+     * Si no es un entero imageId, se borra la imagen principal. Si es entero se borra de la galería
+     */
+
+    
+
+
 });

@@ -54,7 +54,8 @@ Route::middleware(['auth', 'role:editar'])->group(function () {
     Route::post('cars', [CarController::class, 'store'])-> name('cars.store');
     Route::get('cars/{car}/edit', [CarController::class, 'edit'])-> name('cars.edit');
     Route::put('cars/{car}', [CarController::class, 'update'])-> name('cars.update');
-    Route::delete('cars/{car}', [CarController::class, 'destroy'])-> name('cars.destroy');
+    Route::delete('cars/{car}', [CarController::class, 'destroy'])-> name('cars.destroy');      
+    Route::delete('cars/{car}/destroymainimage', [CarController::class, 'destroyMainImage'])-> name('cars.mainImage.destroy');
     Route::delete('cars/{car}/images/{image}', [CarController::class, 'destroyGalleryImage'])-> name('cars.images.destroy');
 });
 

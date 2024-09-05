@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
 {
-    protected $fillable = ['category_id', 'nombre', 'model', 'matricula', 'color', 'year', 'other_data'];
+    protected $fillable = ['category_id', 'nombre', 'model', 'matricula', 'color', 'main_image'];
 
     public function category()
     {

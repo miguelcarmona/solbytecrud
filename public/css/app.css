@@ -8,6 +8,7 @@
 }
 
 .main_image figure, .gallery figure {
+    display: inline-block;
     padding: 5px;
     margin: 0px;
     text-align: center;
@@ -26,9 +27,14 @@
 }
 
 .images img {
+    display: block;
     border: 1px solid #dee2e6;
     padding: 5px;
     max-width: 100%;
+}
+
+.gallery figure img {
+    width: 170px;
 }
 
 

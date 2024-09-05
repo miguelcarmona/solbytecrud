@@ -189,20 +189,25 @@ class CarController extends Controller
     /**
      * Remove the specified image from storage.
      */
-    public function destroyImage($id)
+    public function destroyMainImage(Car $car)
     {
-        $image = CarImage::findOrFail($id);
-        Storage::disk('public')->delete($image->image_path);
-        $image->delete();
+        if (!$car->main_image) {
+            return response()->json(['error' => 'Este coche no tiene una imagen principal a eliminar.'], 404);
+        }
 
-        return back()->with('success', 'Imagen eliminada con éxito.');
+        Storage::disk('public')->delete($car->main_image);
+        
+        $car->main_image = null;
+        $car->save();
+
+        return response()->json(['success' => 'Imagen principal eliminada correctamente']);
     }
 
     /**
      * Eliminar una imagen de la galería
      *
      */
-    public function destroyGalleryImage(Car $car, CarImage       $image)
+    public function destroyGalleryImage(Car $car, CarImage $image)
     {
         if ($car->id !== $image ->car_id) {
             return response()->json(['error' => 'La imagen no pertenece al coche'], 403);

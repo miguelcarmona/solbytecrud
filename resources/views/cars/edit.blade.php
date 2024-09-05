@@ -50,25 +50,32 @@
             <input type="text" name="color" id="color" class="form-control" value="{{ old('color', $car->color) }}" required>
         </div>
 
-        <div class="form-group images mt-5">
+        <div class="form-group images mt-5 main_image">
             <h4>Imagen principal:</h3>
             @if($car->main_image)
-                <img src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen">
+                <figure class="" id="image-{{ $car->id }}">
+                    <img aria-img-delete src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen principal">
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" onclick="carDeleteImage({{$car->id}},false)">Eliminar imagen</button></figcaption>
+                </figure>
+            @else
+                <p style="padding: 5%;">Sin imagen</p>
             @endif
         </div>
 
         <div class="form-group">
-            <label for="main_image">Seleccione una imagen si desea cambiar la principal</label>
-            <input type="file" name="main_image" id="main_image" class="form-control">
+            <div>
+                <label for="main_image">Subir imagen principal</label>
+                <input type="file" name="main_image" id="main_image" class="form-control">
+            </div>
         </div>
 
         <div class="form-group mt-5">
             <h4>Galería:</h3>
             <div class="gallery">
                 @foreach($car->images as $image)
-                <figure class="border" id="image-{{ $image->id }}">
-                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="Imagen" width="200">
-                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" onclick="deleteImage({{$image->id}})">Eliminar imagen</button></figcaption>
+                <figure class="border" id="image-{{ $car->id }}-{{ $image->id }}">
+                    <img aria-img-delete src="{{ asset('storage/' . $image->image_path) }}" alt="Imagen de galería">
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" onclick="carDeleteImage({{ $car->id }},{{$image->id}})">Eliminar imagen</button></figcaption>
                 </figure>
                     @endforeach
             </div>
@@ -85,30 +92,39 @@
         <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar y volver</a>
     </form>
 
-    <script>
-    function deleteImage(imageId) {
+<script>
+    function carDeleteImage(carId, imageId) {
             
-        if (!confirm('¿Está seguro de que desea eliminar esta imagen?')) {
-            return false;
-        }   
+            if (!confirm('¿Está seguro de que desea eliminar esta imagen?')) {
+                return false;
+            }
     
-        fetch(`/cars/{{ $car->id }}/images/${imageId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById(`image-${imageId}`).remove();
+            let url;
+            let figureId;
+            if( !imageId ) {
+                url = `/cars/${carId}/destroymainimage`;
+                figureId = `image-${carId}`;
             } else {
-                alert('Error al eliminar la imagen');
+                url = `/cars/${carId}/images/${imageId}`;
+                figureId = `image-${carId}-${imageId}`;
             }
-        })
-        .catch(error => console.error('Error:', error));
-    }
+        
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'  
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(figureId).remove();
+                } else {
+                    alert('Error al eliminar la imagen');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
 </script>
-
 @endsection
