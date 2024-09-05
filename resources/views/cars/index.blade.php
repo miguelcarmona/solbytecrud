@@ -56,11 +56,10 @@
                     <a href="{{ route('cars.show', $car) }}" class="btn btn-sm btn-info mb-1">Ver</a>
                     @if(auth()->user()->isEditor())
                         <a href="{{ route('cars.edit', $car) }}" class="btn btn-sm btn-warning mb-1">Editar</a>
-                        <form action="{{ route('cars.destroy', $car) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger mb-1">Eliminar</button>
-                        </form>
+                        <button type="button" class="btn btn-danger btn-sm mb-1" data-car_id="{{ $car->id }}"
+                            data-car_name="{{ $car->nombre }} {{ $car->model }} con matrícula {{ $car->matricula }}"
+                            data-form_action="{{ route('cars.destroy', $car) }}"
+                            data-toggle="modal" data-target="#modalDeleteCar">Eliminar</button>
                     @endif
                     <a href="/api/cars/{{ $car->id }}" class="btn btn-sm btn-secondary mb-1">JSON</a>
                 </td>
@@ -68,7 +67,37 @@
             @endforeach
         </tbody>
     </table>
+    <form id="form-car-destroy" action="" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+    </form>
+
 
     {{ $cars->links() }}
 </div>
+
+
+    <!-- Modal delete car-->
+    <div class="modal fade modalConfirm" id="modalDeleteCar" tabindex="-1" aria-labelledby="modalDeleteCar" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar Coche</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>¿Está seguro que desea eliminar este coche?</h5>
+            <p></p>
+            <div class="alert alert-warning text-center" role="alert">¡Precaución! Esta acción no se puede deshacer.</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">No, mantener</button>
+            <button type="button" class="btn btn-warning" aria-borrar onclick="">Sí, borrar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
 @endsection

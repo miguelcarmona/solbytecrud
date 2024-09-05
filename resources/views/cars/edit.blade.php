@@ -55,7 +55,8 @@
             @if($car->main_image)
                 <figure class="" id="image-{{ $car->id }}">
                     <img aria-img-delete src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen principal">
-                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" onclick="carDeleteImage({{$car->id}},false)">Eliminar imagen</button></figcaption>
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" data-car_id="{{ $car->id }}" data-image_id="null" data-image_src="{{ asset('storage/' . $car->main_image) }}" data-toggle="modal" data-target="#modalDeleteImage">Eliminar imagen</button></figcaption>
+                    <!-- onclick="carDeleteImage({{$car->id}},false)" -->
                 </figure>
             @else
                 <p style="padding: 5%;">Sin imagen</p>
@@ -75,7 +76,8 @@
                 @foreach($car->images as $image)
                 <figure class="border" id="image-{{ $car->id }}-{{ $image->id }}">
                     <img aria-img-delete src="{{ asset('storage/' . $image->image_path) }}" alt="Imagen de galería">
-                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" onclick="carDeleteImage({{ $car->id }},{{$image->id}})">Eliminar imagen</button></figcaption>
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" data-car_id="{{ $car->id }}" data-image_id="{{ $image->id }}" data-image_src="{{ asset('storage/' . $image->image_path) }}" data-toggle="modal" data-target="#modalDeleteImage" >Eliminar imagen</button></figcaption>
+                    <!-- onclick="carDeleteImage({{ $car->id }},{{$image->id}})" -->
                 </figure>
                     @endforeach
             </div>
@@ -92,39 +94,63 @@
         <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar y volver</a>
     </form>
 
+    <!-- Modal delete image-->
+    <div class="modal fade modalConfirm" id="modalDeleteImage" tabindex="-1" aria-labelledby="modalDeleteImage" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar imagen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>¿Está seguro que desea eliminar esta imagen?</h5>
+            <img src="">
+            <div class="alert alert-warning text-center" role="alert">¡Precaución! Esta acción no se puede deshacer.</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">No, mantener</button>
+            <button type="button" class="btn btn-warning" aria-borrar onclick="">Sí, borrar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
 <script>
+
+
+
     function carDeleteImage(carId, imageId) {
-            
-            if (!confirm('¿Está seguro de que desea eliminar esta imagen?')) {
-                return false;
-            }
-    
-            let url;
-            let figureId;
-            if( !imageId ) {
-                url = `/cars/${carId}/destroymainimage`;
-                figureId = `image-${carId}`;
-            } else {
-                url = `/cars/${carId}/images/${imageId}`;
-                figureId = `image-${carId}-${imageId}`;
-            }
         
-            fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'  
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById(figureId).remove();
-                } else {
-                    alert('Error al eliminar la imagen');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        $('#modalDeleteImage').modal('hide');
+
+        let url;
+        let figureId;
+        if( !imageId ) {
+            url = `/cars/${carId}/destroymainimage`;
+            figureId = `image-${carId}`;
+        } else {
+            url = `/cars/${carId}/images/${imageId}`;
+            figureId = `image-${carId}-${imageId}`;
         }
+    
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'  
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(figureId).remove();
+            } else {
+                alert('Error al eliminar la imagen');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 </script>
 @endsection

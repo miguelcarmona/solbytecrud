@@ -84,3 +84,27 @@ div#img_modal, div#img_modal * {
     height: auto;
     border-radius: 5px;
 }
+
+
+/* Modal eliminar imágenes */
+.modalConfirm .modal-body {
+    text-align: center;
+}
+
+.modalConfirm .modal-body h5,
+.modalConfirm .modal-body p,
+.modalConfirm .modal-body .alert {
+    margin: 0.5rem 0;
+}
+
+.modalConfirm .modal-body p {
+    margin: 1.5rem 0;
+    font-size: 1.5rem;
+}
+.modalConfirm .modal-body img {
+    margin: 1rem;
+    max-width: 300px;
+    max-height: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
