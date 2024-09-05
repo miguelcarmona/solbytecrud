@@ -55,7 +55,10 @@
             @if($car->main_image)
                 <figure class="" id="image-{{ $car->id }}">
                     <img aria-img-delete src="{{ asset('storage/' . $car->main_image) }}" alt="Imagen principal">
-                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" data-car_id="{{ $car->id }}" data-image_id="null" data-image_src="{{ asset('storage/' . $car->main_image) }}" data-toggle="modal" data-target="#modalDeleteImage">Eliminar imagen</button></figcaption>
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm"
+                    data-car_id="{{ $car->id }}" data-image_id="null" data-image_src="{{ asset('storage/' . $car->main_image) }}"
+                    data-csrf_token="{{ csrf_token() }}"
+                    data-toggle="modal" data-target="#modalDeleteImage">Eliminar imagen</button></figcaption>
                     <!-- onclick="carDeleteImage({{$car->id}},false)" -->
                 </figure>
             @else
@@ -76,7 +79,10 @@
                 @foreach($car->images as $image)
                 <figure class="border" id="image-{{ $car->id }}-{{ $image->id }}">
                     <img aria-img-delete src="{{ asset('storage/' . $image->image_path) }}" alt="Imagen de galería">
-                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" data-car_id="{{ $car->id }}" data-image_id="{{ $image->id }}" data-image_src="{{ asset('storage/' . $image->image_path) }}" data-toggle="modal" data-target="#modalDeleteImage" >Eliminar imagen</button></figcaption>
+                    <figcaption><button type="button" style="width: 100%;" class="btn btn-danger btn-sm" data-car_id="{{ $car->id }}"
+                    data-image_id="{{ $image->id }}" data-image_src="{{ asset('storage/' . $image->image_path) }}"
+                    data-csrf_token="{{ csrf_token() }}"
+                    data-toggle="modal" data-target="#modalDeleteImage" >Eliminar imagen</button></figcaption>
                     <!-- onclick="carDeleteImage({{ $car->id }},{{$image->id}})" -->
                 </figure>
                     @endforeach
@@ -121,36 +127,5 @@
 
 
 
-    function carDeleteImage(carId, imageId) {
-        
-        $('#modalDeleteImage').modal('hide');
-
-        let url;
-        let figureId;
-        if( !imageId ) {
-            url = `/cars/${carId}/destroymainimage`;
-            figureId = `image-${carId}`;
-        } else {
-            url = `/cars/${carId}/images/${imageId}`;
-            figureId = `image-${carId}-${imageId}`;
-        }
-    
-        fetch(url, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'  
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById(figureId).remove();
-            } else {
-                alert('Error al eliminar la imagen');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
 </script>
 @endsection

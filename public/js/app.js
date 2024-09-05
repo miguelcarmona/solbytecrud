@@ -39,12 +39,45 @@ $(document).ready(function() {
         
         var modal = $(this);
         var button = $(event.relatedTarget); // Button that triggered the modal
-        var carId = button.data('car_id');
-        var imageId = button.data('image_id');
-        var imageSrc = button.data('image_src');
-        modal.find('.modal-body img').attr('src',imageSrc);
-        modal.find('[aria-borrar]').attr('onclick','carDeleteImage(' + carId + ',' + imageId + ');');
+        modal.find('.modal-body img').attr('src',button.data('image_src'));
+        modal.find('[aria-borrar]').attr('onclick',
+            'carDeleteImage(' + button.data('car_id') + ',' + button.data('image_id') + ',\'' + button.data('csrf_token') + '\');');
     });
 
 
 });
+
+/**
+ * Realiza una petición ajax para eliminar la imagen principal o de galería de un coche
+ */
+function carDeleteImage(carId, imageId, csrf_token) {
+        
+    $('#modalDeleteImage').modal('hide');
+
+    let url;
+    let figureId;
+    if( !imageId ) {
+        url = '/cars/' + carId + '/destroymainimage';
+        figureId = 'image-'+ carId;
+    } else {
+        url = '/cars/' + carId + '/images/' + imageId;
+        figureId = 'image-' + carId + '-' + imageId;
+    }
+
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrf_token,
+            'Content-Type': 'application/json'  
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(figureId).remove();
+        } else {
+            alert('Error al eliminar la imagen');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
