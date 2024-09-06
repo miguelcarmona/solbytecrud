@@ -37,7 +37,7 @@
     transition: max-height 0.4s ease-in-out;
 }
 #carSearch .form_order.show {
-    max-height: 150px;
+    max-height: 200px;
 }
 
 

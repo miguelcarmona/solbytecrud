@@ -65,18 +65,22 @@ $(document).ready(function() {
         $('#carSearch').submit();
     });
 
+    // Mostrar/ocultas los filtros
     $('button#order-button').on('click', function() {
         $('#carSearch .form_order').toggleClass('show');
         $(this).blur(); //quitamos el foco para que no quede resaltado
 
         //Actualizamos max-height según la altura real que ocupa (depende del tamaño de pantalla)
         if( $('#carSearch .form_order').hasClass('show') ) {
-            setTimeout(function() {
-                let maxHeight = $('#carSearch .form_order.show').outerHeight(true);
-                modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height', maxHeight+'px');       
-            }, 500);
+            ajustarHeightFormOrder();
+            $(window).on('resize', ajustarHeightFormOrder);
+        } else {
+            $(window).off('resize', ajustarHeightFormOrder);
+            ajustarHeightFormOrder();
         }
     });
+
+
 
     /** Limpiar el input search con el botón X */
     $('#carSearch div.input-group .btn-secondary').on('click', function() {
@@ -154,3 +158,20 @@ function modificarPropiedadDeClase(clase, propiedad, valor) {
     });
 }
 
+/**
+ * Ajusta el max-height de la capa de filtros al tamaño real
+ */
+var ajustarHeightFormOrder_setTimeout=null;
+function ajustarHeightFormOrder(){
+
+    modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height','200px');       
+
+    if( ajustarHeightFormOrder_setTimeout ) clearTimeout(ajustarHeightFormOrder_setTimeout);
+
+    if( $('#carSearch .form_order').hasClass('show') ) {
+        ajustarHeightFormOrder_setTimeout = setTimeout(function(){
+            let maxHeight = $('#carSearch .form_order.show').outerHeight(true);
+            modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height', maxHeight+'px');
+        }, 500);
+    }
+}
