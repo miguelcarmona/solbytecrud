@@ -27,29 +27,30 @@ Route::get('/', [CarController::class, 'index'])->middleware(['auth', 'verified'
 Route::get('/dashboard', [CarController::class, 'index'])->middleware(['auth', 'verified']);
 Route::get('/categories', [CategoryController::class, 'index'])->middleware(['auth', 'verified']);
 
-
+/** Roles comunes para ver y editar */
 Route::middleware(['auth', 'role:ver,editar'])->group(function () {
     
     //Route::resource('categories', CategoryController::class)->only(['index']);
-    Route::get('categories', [CategoryController    ::class, 'index'])-> name('categories.index');
+    Route::get('categories', [CategoryController::class, 'index'])-> name('categories.index');
 
     //Route::resource('cars', CarController::class)->only(['index', 'show', 'exportCsv']);
     Route::get('cars', [CarController::class, 'index'])-> name('cars.index');
-    Route::get('cars/show/{car}', [CarController::class, 'show'])-> name('cars.show');
+    Route::get('cars/{car}', [CarController::class, 'show'])-> name('cars.show');
     Route::get('cars/exportCsv', [CarController::class, 'exportCSV'])-> name('cars.exportCsv');
 
 });
 
+/** Roles para editar */
 Route::middleware(['auth', 'role:editar'])->group(function () {
 
     //Route::resource('categories', CategoryController::class)->only(['show','create','store','update','edit','destroy']);
-    Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
-    Route::get('categories/show', [CategoryController::class, 'show'])-> name('categories.show');
+    //Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
+    //Route::get('categories/{category}', [CategoryController::class, 'show'])-> name('categories.show');
     Route::get('categories/create', [CategoryController::class, 'create'])-> name('categories.create');
     Route::post('categories', [CategoryController::class, 'store'])-> name('categories.store');
-    Route::get('categories/{categories}/edit', [CategoryController::class, 'edit'])-> name('categories.edit');
-    Route::put('categories/{categories}', [CategoryController::class, 'update'])-> name('categories.update');
-    Route::delete('categories/{categories}', [CategoryController::class, 'destroy'])-> name('categories.destroy');
+    Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])-> name('categories.edit');
+    Route::put('categories/{category}', [CategoryController::class, 'update'])-> name('categories.update');
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])-> name('categories.destroy');
 
     //Route::resource('cars', CategoryController::class)->only(['create','store','update','edit','destroy']);
     Route::get('cars/create', [CarController::class, 'create'])-> name('cars.create');

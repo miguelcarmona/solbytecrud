@@ -16,20 +16,23 @@
     gap: 10px
 }
 
-.main_image figure, .gallery figure {
+.main_image figure,
+.gallery figure {
     display: inline-block;
     padding: 5px;
     margin: 0px;
     text-align: center;
 }
 
-.main_image img, .gallery img {
+.main_image img,
+.gallery img {
     max-width: 100%;
     height: auto;
     vertical-align: bottom;
 }
 
-.main_image figcaption, .gallery figcaption {
+.main_image figcaption,
+.gallery figcaption {
     margin-top: 8px;
     font-size: 14px;
     color: #666;
@@ -52,7 +55,7 @@ nav[role="navigation"][aria-label="Pagination Navigation"]>div:first-child {
     display: none;
 }
 
-nav[role="navigation"][aria-label="Pagination Navigation"] svg{
+nav[role="navigation"][aria-label="Pagination Navigation"] svg {
     width: 20px;
 }
 
@@ -62,20 +65,23 @@ img[aria-img-modal] {
     cursor: pointer;
 }
 
-div#img_modal, div#img_modal * {
+div#img_modal,
+div#img_modal * {
     user-select: none;
     cursor: pointer;
 }
 
 #img_modal {
-    display: none; /* Oculta el modal por defecto */
+    display: none;
+    /* Oculta el modal por defecto */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.85); /* Fondo negro con 80% de opacidad */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Fondo negro con 80% de opacidad */
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -84,7 +90,7 @@ div#img_modal, div#img_modal * {
 
 /* Modal visible */
 #img_modal.visible {
-    display: flex; /* Flexbox para centrar el contenido */
+    display: flex;
     opacity: 1;
 }
 
@@ -110,10 +116,196 @@ div#img_modal, div#img_modal * {
     margin: 1.5rem 0;
     font-size: 1.5rem;
 }
+
 .modalConfirm .modal-body img {
     margin: 1rem;
     max-width: 300px;
     max-height: 150px;
     padding: 5px;
     border: 1px solid #ccc;
+}
+
+
+/* Títulos de los listados */
+.header-title {
+    gap: 5px 10px;
+}
+
+
+/* Tabla de listado de coches */
+table.car-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.car-list thead {
+    border-bottom: 2px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); /* Añade una sombra sutil para distinguir el encabezado */
+}
+
+table.car-list thead::after,
+table.car-list thead::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+table.car-list thead::before {
+    border-bottom: 2px solid #dee2e6;
+    top:0;
+    margin-top: -0.5px;
+}
+
+table.car-list thead th {
+    border: 0;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+}
+
+table.car-list tbody td {
+    text-align: left;
+    vertical-align: top;
+    padding: 8px;
+}
+
+table.car-list img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+
+
+@media (max-width: 1150px) {
+    table.car-list thead {
+        display: none;
+    }
+
+    table.car-list tbody tr:nth-child(1) {
+        border-top: 1px solid #999;
+    }
+
+    table.car-list tbody tr {
+        display: grid;
+        grid-template-columns: 1fr fit-content(305px);
+        grid-gap: 5px 10px;
+        align-items: start;
+        padding: 10px 0;
+        border-bottom: 1px solid #999;
+    }
+
+    table.car-list tbody td {
+        padding: 0;
+    }
+
+    table.car-list tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    table.car-list th,
+    table.car-list td {
+        border: none;
+    }
+
+    table.car-list tbody td:nth-child(-n+6) {
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    table.car-list tbody td:nth-child(1) {
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    table.car-list tbody td:nth-child(2) {
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+
+    table.car-list tbody td:nth-child(3) {
+        grid-row-start: 3;
+        grid-row-end: 4;
+    }
+
+    table.car-list tbody td:nth-child(4) {
+        grid-row-start: 4;
+        grid-row-end: 5;
+    }
+
+    table.car-list tbody td:nth-child(5) {
+        grid-row-start: 5;
+        grid-row-end: 6;
+    }
+
+    table.car-list tbody td:nth-child(6) {
+        grid-row-start: 6;
+        grid-row-end: 7;
+    }
+
+    table.car-list tbody td:nth-child(7) {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 7;
+    }
+
+    table.car-list tbody td:nth-child(8) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 7;
+        grid-row-end: 8;
+        text-align: center;
+        padding-bottom: 0;
+    }
+
+
+    /* Estilos para los botones */
+    .actions-cell .btn {
+        width: auto;
+    }
+
+
+    @media (max-width: 550px) {
+        table.car-list img {
+            width: auto;
+            max-width: 100%;
+        }
+
+        table.car-list tbody tr {
+            grid-template-columns: 1fr !important;
+        }
+
+        table.car-list tbody td:nth-child(-n+8) {
+            grid-column-start: 1 !important;
+            grid-column-end: 2 !important;
+        }
+
+        table.car-list tbody td:nth-child(7) {
+            grid-row-start: 7;
+            grid-row-end: 8;
+            text-align: center
+        }
+
+        table.car-list tbody td:nth-child(8) {
+            grid-row-start: 8;
+            grid-row-end: 9;
+        }
+
+
+    }
+
+}
+
+
+.btn svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }

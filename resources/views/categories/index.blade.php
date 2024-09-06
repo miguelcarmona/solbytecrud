@@ -31,7 +31,7 @@
                     <td>{{ $category->description }}</td>
                     @if(auth()->user()->isEditor())
                         <td>
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm mb-1">Editar</a>
                             
                             <button type="button" class="btn btn-danger btn-sm mb-1" data-category_id="{{ $category->id }}"
                             data-car_name="{{ $category->name }}  "

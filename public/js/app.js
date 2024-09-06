@@ -58,6 +58,13 @@ $(document).ready(function() {
     });
 
 
+    /**
+     * Formulario para ordenar la tabla cars
+     */
+    $('#carSearch select#sort, #carSearch select#direction').on('change', function() {
+        $('#carSearch').submit();
+    });
+
 });
 
 /**
