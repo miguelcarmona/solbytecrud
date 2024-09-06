@@ -11,14 +11,9 @@
             <a href="{{ route('cars.exportCsv') }}" class="btn btn-success mb-2">Exportar CSV</a>
         </div>
     </div>
+    
     <form id="carSearch" method="GET" action="{{ route('cars.index') }}">
-<!-- 
-        <div class="mb-4 d-flex justify-content-center" style="width: 80%; margin: auto;">
-                <input type="text" name="search" class="form-control" placeholder="Buscar..." value="{{ request('search') }}" style="margin-right: 5px;">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-        </div>
--->
-
+    
     <div class="input-group">
         <!-- Input de búsqueda -->
         <input type="text" id="search_input_id" name="search" class="form-control" placeholder="Buscar..." value="{{ request('search') }}">
@@ -38,28 +33,27 @@
             </button>
         </div>
     </div>
-    <div class="row mb-4">
-                <div class="col-md-6">
-                    <label for="sort">Ordenar por:</label>
-                    <select name="sort" id="sort" class="form-control">
-                        <option value="id" {{ request('sort') == 'id' ? 'selected' : '' }}>ID</option>
-                        <option value="category_id" {{ request('sort') == 'category_id' ? 'selected' : '' }}>Categoría</option>
-                        <option value="nombre" {{ request('sort') == 'nombre' ? 'selected' : '' }}>Marca</option>
-                        <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo</option>
-                        <option value="matricula" {{ request('sort') == 'matricula' ? 'selected' : '' }}>Matrícula</option>
-                        <option value="color" {{ request('sort') == 'color' ? 'selected' : '' }}>Color</option>
-                        <option value="color" {{ request('sort') == 'main_image' ? 'selected' : '' }}>Foto</option>
-                    </select>
-                </div>
+    <div class="row mb-4 form_order">
+        <div class="col-md-6">
+            <label for="sort">Ordenar por:</label>
+            <select name="sort" id="sort" class="form-control">
+                <option value="id" {{ request('sort') == 'id' ? 'selected' : '' }}>ID</option>
+                <option value="category_id" {{ request('sort') == 'category_id' ? 'selected' : '' }}>Categoría</option>
+                <option value="nombre" {{ request('sort') == 'nombre' ? 'selected' : '' }}>Marca</option>
+                <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo</option>
+                <option value="matricula" {{ request('sort') == 'matricula' ? 'selected' : '' }}>Matrícula</option>
+                <option value="color" {{ request('sort') == 'color' ? 'selected' : '' }}>Color</option>
+            </select>
+        </div>
 
-                <div class="col-md-6">
-                    <label for="direction">Orden:</label>
-                    <select name="direction" id="direction" class="form-control">
-                        <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
-                        <option value="desc" {{ request('direction') == 'desc' ? 'selected' : '' }}>Descendente</option>
-                    </select>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <label for="direction">Orden:</label>
+            <select name="direction" id="direction" class="form-control">
+                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
+                <option value="desc" {{ request('direction') == 'desc' ? 'selected' : '' }}>Descendente</option>
+            </select>
+        </div>
+    </div>
 
     </form>
 
@@ -74,13 +68,31 @@
         <table class="table table-hover car-list">
             <thead>
                 <tr>
-                    <th><a href="{{ route('cars.index', ['sort' => 'id', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">ID</a></th>
-                    <th><a href="{{ route('cars.index', ['sort' => 'category_id ', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Categoría</a></th>
-                    <th><a href="{{ route('cars.index', ['sort' => 'nombre', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Marca</a></th>
-                    <th><a href="{{ route('cars.index', ['sort' => 'model', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Modelo</a></th>
-                    <th><a href="{{ route('cars.index', ['sort' => 'matricula', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Matrícula</a></th>
-                    <th><a href="{{ route('cars.index', ['sort' => 'color', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Color</a></th>
-                    <th><a href   ="{{ route('cars.index', ['sort' => 'main_image', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">Foto</a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'id', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                            @if ($sortColumn === 'id')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>ID</span></a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'category_id ', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                        @if ($sortColumn === 'category_id')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>Categoría</span></a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'nombre', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                        @if ($sortColumn === 'nombre')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>Marca</span></a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'model', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                        @if ($sortColumn === 'model')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>Modelo</span></a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'matricula', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                        @if ($sortColumn === 'matricula')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>Matrícula</span></a></th>
+                    <th><a style="gap: 5px;" class="d-flex align-items-center" href="{{ route('cars.index', ['sort' => 'color', 'direction' => $sortDirection === 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}">
+                        @if ($sortColumn === 'color')
+                            <i class="fa fa-chevron-{{ $sortDirection === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif <span>Color</span></a></th>
+                    <th>Foto</th>
                     <th></th>
                 </tr>
             </thead>

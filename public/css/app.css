@@ -6,6 +6,11 @@
     margin-bottom: 2rem;
 }
 
+#carSearch .form_order {
+    padding: 0 15px;
+    display: none;
+}
+
 
 /* Galería de imágenes */
 .gallery {
@@ -133,6 +138,10 @@ div#img_modal * {
 
 
 /* Tabla de listado de coches */
+table.car-list tbody td {
+    transition: all 0.3s ease-in-out;
+}
+
 table.car-list {
     width: 100%;
     border-collapse: collapse;
@@ -183,6 +192,11 @@ table.car-list img {
 
 
 @media (max-width: 1150px) {
+
+    #carSearch .form_order {
+        display: flex;
+    }
+
     table.car-list thead {
         display: none;
     }
