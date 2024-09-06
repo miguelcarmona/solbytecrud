@@ -68,6 +68,14 @@ $(document).ready(function() {
     $('button#order-button').on('click', function() {
         $('#carSearch .form_order').toggleClass('show');
         $(this).blur(); //quitamos el foco para que no quede resaltado
+
+        //Actualizamos max-height según la altura real que ocupa (depende del tamaño de pantalla)
+        if( $('#carSearch .form_order').hasClass('show') ) {
+            setTimeout(function() {
+                let maxHeight = $('#carSearch .form_order.show').outerHeight(true);
+                modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height', maxHeight+'px');       
+            }, 500);
+        }
     });
 
     /** Limpiar el input search con el botón X */
@@ -124,3 +132,25 @@ function carDeleteImage(carId, imageId, csrf_token) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+/**
+ * 
+ * Modifica una propiedad CSS de la hoja de estilos
+ */
+function modificarPropiedadDeClase(clase, propiedad, valor) {
+    // Recorremos las hojas de estilo del documento
+    $.each(document.styleSheets, function(index, sheet) {
+        // Buscamos la hoja de estilo 'app.css'
+        if (sheet.href.indexOf('app.css') !== -1) {
+            // Recorremos las reglas CSS de la hoja de estilo
+            $.each(sheet.cssRules || sheet.rules, function(idx, regla) {
+                // Si encontramos la clase que queremos modificar
+                if (regla.selectorText === clase) {
+                    // Cambiamos la propiedad especificada
+                    regla.style[propiedad] = valor;
+                }
+            });
+        }
+    });
+}
+
