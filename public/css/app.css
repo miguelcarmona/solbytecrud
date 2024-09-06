@@ -1,4 +1,8 @@
 /* Barra de búsqueda en cars */
+#carSearch div#search-order-container {
+    margin-bottom: 1rem;
+}
+
 #carSearch div.input-group {
     width: 80%;
     text-align: center;
@@ -6,9 +10,19 @@
     margin-bottom: 2rem;
 }
 
+#search-order-container #order-button {
+    display: none;
+}
+
 #carSearch .form_order {
     padding: 0 15px;
-    display: none;
+    display: flex;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+#carSearch .form_order.show {
+    max-height: 150px;
 }
 
 
@@ -193,10 +207,20 @@ table.car-list img {
 
 @media (max-width: 1150px) {
 
-    #carSearch .form_order {
-        display: flex;
+    #carSearch div.input-group {
+        width: 100%;
+        padding: 0 15px;
+        margin-bottom: 0;
     }
 
+    #search-order-container #order-button {
+        display: block;
+    }
+    
+    #search-order-container {
+        display: flex;
+    }
+        
     table.car-list thead {
         display: none;
     }

@@ -22,7 +22,6 @@ exit;
         if (!auth()->check())
             return redirect('login');
 
-
         if(auth()->user()->role === 'editar')
             return $next($request);
 

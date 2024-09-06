@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="29.120041mm"
+   height="28.006674mm"
+   viewBox="0 0 29.120041 28.006674"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-67.204164,-90.75208)">
+    <g
+       id="g64"
+       style="fill:#ffffff;fill-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,55.336017,65.599468)">
+      <polygon
+         style="fill:#ffffff;fill-opacity:1"
+         points="92.733,137.78 70.743,99.691 48.752,137.78 60.706,137.78 60.706,200.917 80.78,200.917 80.78,137.78 "
+         id="polygon6" />
+      <polygon
+         style="fill:#ffffff;fill-opacity:1"
+         points="122.889,99.691 122.889,162.828 110.936,162.828 132.926,200.917 154.916,162.828 142.963,162.828 142.963,99.691 "
+         id="polygon7" />
+      <polygon
+         style="fill:#ffffff;fill-opacity:1"
+         points="56.81,133.153 56.81,196.29 76.883,196.29 76.883,133.153 88.837,133.153 66.847,95.065 44.856,133.153 "
+         id="polygon21" />
+      <polygon
+         style="fill:#ffffff;fill-opacity:1"
+         points="118.993,158.202 107.039,158.202 129.03,196.29 151.02,158.202 139.066,158.202 139.066,95.065 118.993,95.065 "
+         id="polygon22" />
+    </g>
+  </g>
+</svg>

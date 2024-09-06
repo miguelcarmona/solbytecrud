@@ -65,6 +65,21 @@ $(document).ready(function() {
         $('#carSearch').submit();
     });
 
+    $('button#order-button').on('click', function() {
+        $('#carSearch .form_order').toggleClass('show');
+        $(this).blur(); //quitamos el foco para que no quede resaltado
+    });
+
+    /** Limpiar el input search con el botón X */
+    $('#carSearch div.input-group .btn-secondary').on('click', function() {
+        $('#search_input_id').val(''); // Vacía el input
+        $('#carSearch').submit(); // Envía el formulario para vaciar
+    //      $(this).blur(); // Quita el foco del botón
+    });
+
+
+    
+
 });
 
 /**
@@ -101,10 +116,3 @@ function carDeleteImage(carId, imageId, csrf_token) {
     })
     .catch(error => console.error('Error:', error));
 }
-
-/** Limpiar el input search con el botón X */
-$('#carSearch div.input-group   .btn-secondary').on('click', function() {
-    $('#search_input_id').val(''); // Vacía el input
-    $('#carSearch').submit(); // Envía el formulario para vaciar
-    $(this).blur(); // Quita el foco del botón
-});

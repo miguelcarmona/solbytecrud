@@ -27,19 +27,6 @@ Route::get('/', [CarController::class, 'index'])->middleware(['auth', 'verified'
 Route::get('/dashboard', [CarController::class, 'index'])->middleware(['auth', 'verified']);
 Route::get('/categories', [CategoryController::class, 'index'])->middleware(['auth', 'verified']);
 
-/** Roles comunes para ver y editar */
-Route::middleware(['auth', 'role:ver,editar'])->group(function () {
-    
-    //Route::resource('categories', CategoryController::class)->only(['index']);
-    Route::get('categories', [CategoryController::class, 'index'])-> name('categories.index');
-
-    //Route::resource('cars', CarController::class)->only(['index', 'show', 'exportCsv']);
-    Route::get('cars', [CarController::class, 'index'])-> name('cars.index');
-    Route::get('cars/{car}', [CarController::class, 'show'])-> name('cars.show');
-    Route::get('cars/exportCsv', [CarController::class, 'exportCSV'])-> name('cars.exportCsv');
-
-});
-
 /** Roles para editar */
 Route::middleware(['auth', 'role:editar'])->group(function () {
 
@@ -52,7 +39,7 @@ Route::middleware(['auth', 'role:editar'])->group(function () {
     Route::put('categories/{category}', [CategoryController::class, 'update'])-> name('categories.update');
     Route::delete('categories/{category}', [CategoryController::class, 'destroy'])-> name('categories.destroy');
 
-    //Route::resource('cars', CategoryController::class)->only(['create','store','update','edit','destroy']);
+    //  Route::resource('cars', CarController::class)->only(['create','store','update','edit','destroy']);
     Route::get('cars/create', [CarController::class, 'create'])-> name('cars.create');
     Route::post('cars', [CarController::class, 'store'])-> name('cars.store');
     Route::get('cars/{car}/edit', [CarController::class, 'edit'])-> name('cars.edit');
@@ -61,6 +48,20 @@ Route::middleware(['auth', 'role:editar'])->group(function () {
     Route::delete('cars/{car}/destroymainimage', [CarController::class, 'destroyMainImage'])-> name('cars.mainImage.destroy');
     Route::delete('cars/{car}/images/{image}', [CarController::class, 'destroyGalleryImage'])-> name('cars.images.destroy');
 });
+
+/** Roles comunes para ver y editar */
+Route::middleware(['auth', 'role:ver,editar'])->group(function () {
+    
+    //Route::resource('categories', CategoryController::class)->only(['index']);
+    Route::get('categories', [CategoryController::class, 'index'])-> name('categories.index');
+
+    //Route::resource('cars', CarController::class)->only(['index', 'show', 'exportCsv']);
+    Route::get('cars', [CarController::class, 'index'])-> name('cars.index');
+    Route::get('cars/exportCsv', [CarController::class, 'exportCSV'])-> name('cars.exportCsv');
+    Route::get('cars/{car}', [CarController::class, 'show'])-> name('cars.show');
+
+});
+
 
 /*
 Route::get('/dashboard', function () {
