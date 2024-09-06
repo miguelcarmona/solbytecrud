@@ -38,7 +38,7 @@
                 <img src="{{ asset('css/icons/order_icon.svg') }}" width="16" >
         </button>
     </div>
-    <div class="row mb-4 form_order">
+    <div class="row form_order">
         <div class="col-md-6">
             <label for="sort">Ordenar por:</label>
             <select name="sort" id="sort" class="form-control">

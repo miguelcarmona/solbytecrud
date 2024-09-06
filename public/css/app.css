@@ -236,6 +236,10 @@ table.car-list img {
         display: flex;
     }
         
+    #carSearch .form_order {
+        margin-bottom: 1rem;
+    }
+
     table.car-list thead {
         display: none;
     }
