@@ -13,9 +13,15 @@
     background-color: #5a6268; /* Cambiar color cuando esté en hover */
 }
 
+/* Cabecera */
+.header-title {
+    padding: 0 1rem;
+}
+
 /* Barra de búsqueda en cars */
 #carSearch div#search-order-container {
     margin-bottom: 1rem;
+    padding: 0 1rem;
 }
 
 #carSearch div.input-group {
@@ -224,7 +230,8 @@ table.car-list img {
 
     #carSearch div.input-group {
         width: 100%;
-        padding: 0 15px;
+        padding: 0;
+        padding-right: 15px;
         margin-bottom: 0;
     }
 
