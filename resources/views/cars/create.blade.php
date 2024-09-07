@@ -59,8 +59,9 @@
             <input type="file" name="gallery_images[]" id="gallery_images" class="form-control" multiple>
         </div>
 
-
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('cars.index') }}" class="btn btn-secondary">Volver</a>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ route('cars.index') }}" class="btn btn-secondary">Volver</a>
+        </div>
     </form>
 @endsection

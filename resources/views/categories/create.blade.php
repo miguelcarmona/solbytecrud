@@ -1,9 +1,9 @@
 @extends('layouts.myapp')
 
-@section('title', 'Crear Categoría')
+@section('title', 'Nueva Categoría')
 
 @section('content')
-    <h1>Crear Categoría</h1>
+    <h1>Nueva Categoría</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -27,7 +27,9 @@
             <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Volver</a>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ route('categories.index') }}" class="btn btn-secondary">Volver</a>
+        </div>
     </form>
 @endsection

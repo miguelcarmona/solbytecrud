@@ -65,23 +65,6 @@ $(document).ready(function() {
         $('#carSearch').submit();
     });
 
-    // Mostrar/ocultas los filtros
-    $('button#order-button').on('click', function() {
-        $('#carSearch .form_order').toggleClass('show');
-        $(this).blur(); //quitamos el foco para que no quede resaltado
-
-        //Actualizamos max-height según la altura real que ocupa (depende del tamaño de pantalla)
-        if( $('#carSearch .form_order').hasClass('show') ) {
-            ajustarHeightFormOrder();
-            $(window).on('resize', ajustarHeightFormOrder);
-        } else {
-            $(window).off('resize', ajustarHeightFormOrder);
-            ajustarHeightFormOrder();
-        }
-    });
-
-
-
     /** Limpiar el input search con el botón X */
     $('#carSearch div.input-group .btn-secondary').on('click', function() {
         $('#search_input_id').val(''); // Vacía el input
@@ -89,8 +72,15 @@ $(document).ready(function() {
     //      $(this).blur(); // Quita el foco del botón
     });
 
+    // Limpia el foco del botón de mostrar el formulario de ordenar
+    $('#order-button').on('click', function(){
+        $(this).blur();
+    });
 
-    //** PWA */
+
+    /**
+     * PWA
+     */
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js');
     }
@@ -130,43 +120,4 @@ function carDeleteImage(carId, imageId, csrf_token) {
         }
     })
     .catch(error => console.error('Error:', error));
-}
-
-/**
- * 
- * Modifica una propiedad CSS de la hoja de estilos
- */
-function modificarPropiedadDeClase(clase, propiedad, valor) {
-    // Recorremos las hojas de estilo del documento
-    $.each(document.styleSheets, function(index, sheet) {
-        // Buscamos la hoja de estilo 'app.css'
-        if (sheet.href.indexOf('app.css') !== -1) {
-            // Recorremos las reglas CSS de la hoja de estilo
-            $.each(sheet.cssRules || sheet.rules, function(idx, regla) {
-                // Si encontramos la clase que queremos modificar
-                if (regla.selectorText === clase) {
-                    // Cambiamos la propiedad especificada
-                    regla.style[propiedad] = valor;
-                }
-            });
-        }
-    });
-}
-
-/**
- * Ajusta el max-height de la capa de filtros al tamaño real
- */
-var ajustarHeightFormOrder_setTimeout=null;
-function ajustarHeightFormOrder(){
-
-    modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height','200px');       
-
-    if( ajustarHeightFormOrder_setTimeout ) clearTimeout(ajustarHeightFormOrder_setTimeout);
-
-    if( $('#carSearch .form_order').hasClass('show') ) {
-        ajustarHeightFormOrder_setTimeout = setTimeout(function(){
-            let maxHeight = $('#carSearch .form_order.show').outerHeight(true);
-            modificarPropiedadDeClase('#carSearch .form_order.show', 'max-height', maxHeight+'px');
-        }, 500);
-    }
 }

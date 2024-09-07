@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <h1>Listado de Categorías</h1>
+        <h1>Categorías</h1>
         @if(auth()->user()->isEditor())
-            <a href="{{ route('categories.create') }}" class="btn btn-primary">Nueva Categoría</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary">Nueva</a>
         @endif
     </div>
 
@@ -20,7 +20,7 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 @if(auth()->user()->isEditor())
-                    <th>Acciones</th>
+                    <th></th>
                 @endif
                 </tr>
         </thead>
@@ -30,7 +30,7 @@
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->description }}</td>
                     @if(auth()->user()->isEditor())
-                        <td>
+                        <td class="text-right">
                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm mb-1">Editar</a>
                             
                             <button type="button" class="btn btn-danger btn-sm mb-1" data-category_id="{{ $category->id }}"

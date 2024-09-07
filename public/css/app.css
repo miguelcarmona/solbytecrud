@@ -15,20 +15,50 @@
 
 /* Cabecera */
 .header-title {
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-title.listado {
     padding: 0 1rem;
 }
+.header-title .buttons a {
+    margin-left: 4px;
+}
+
+.header-title .dropdown-menu a {
+    padding: 1rem;
+    line-height: 2rem;
+}
+
+.header-title .buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.header-title #extra-buttons-compressed {
+    display: none;
+}
+
 
 /* Barra de búsqueda en cars */
 #carSearch div#search-order-container {
-    margin-bottom: 1rem;
     padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+#carSearch div#search-order-container button {
+    line-height: normal;
+    min-width: 42px;
 }
 
 #carSearch div.input-group {
     width: 80%;
     text-align: center;
     margin: auto;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 #search-order-container #order-button {
@@ -37,15 +67,8 @@
 
 #carSearch .form_order {
     padding: 0 15px;
-    display: flex;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
+    row-gap: 1rem;
 }
-#carSearch .form_order.show {
-    max-height: 200px;
-}
-
 
 /* Galería de imágenes */
 .gallery {
@@ -80,7 +103,6 @@
 
 .images img {
     display: block;
-    border: 1px solid #dee2e6;
     padding: 5px;
     max-width: 100%;
 }
@@ -89,6 +111,10 @@
     width: 170px;
 }
 
+.main_image.edit img,
+.images.gallery img {
+    border: 1px solid #dee2e6;
+}
 
 /* Paginación */
 nav[role="navigation"][aria-label="Pagination Navigation"]>div:first-child {
@@ -243,10 +269,6 @@ table.car-list img {
         display: flex;
     }
         
-    #carSearch .form_order {
-        margin-bottom: 1rem;
-    }
-
     table.car-list thead {
         display: none;
     }
@@ -335,8 +357,18 @@ table.car-list img {
         width: auto;
     }
 
+    @media (max-width: 767px) {
+    }
 
     @media (max-width: 550px) {
+        .header-title #extra-buttons {
+            display: none;
+        }
+        
+        .header-title #extra-buttons-compressed {
+            display: block;
+        }
+        
         table.car-list img {
             width: auto;
             max-width: 100%;

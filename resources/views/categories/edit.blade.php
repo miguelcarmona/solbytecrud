@@ -27,8 +27,9 @@
             <label for="description">Descripción</label>
             <textarea name="description" id="description" class="form-control">{{ old('description', $category->description) }}</textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Volver</a>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{{ route('categories.index') }}" class="btn btn-secondary">Volver</a>
+        </div>
     </form>
 @endsection
